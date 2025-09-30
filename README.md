@@ -6,7 +6,8 @@ Setup Environment:
 conda env create -f conda_env.yaml
 conda activate conda_metabolic_pipeline
 
-2. Edit config.yaml
+2.
+Edit config.yaml
 Change these paths to match your system:
 
 directories:
@@ -25,7 +26,8 @@ databases:
 input_files:
   metadata: "input/meta_input_pipeline.csv"            # sample metadata file
 
-3. Prepare Input Files
+3.
+Prepare Input Files
 Create input/meta_input_pipeline.csv with samples:
 sample_id,Taurine,Creatinine,Carnitine,Xylan,Chitin
 Sample_001,Sample_001,,Sample_001,,
@@ -36,7 +38,8 @@ Use sample IDs that match FASTQ file names
 For reference genomes, add .fa extension
 Leave empty cells for media conditions not tested
 
-4. Run the pipeline
+4.
+Run the pipeline
 snakemake -n
 
 #full run
@@ -46,7 +49,8 @@ snakemake --cores 8 --use-singularity
 snakemake --cores 8 --use-singularity results/gtdbtk/done.txt  # Only taxonomy
 snakemake --cores 8 --use-singularity results/gapseq_models/multi_media_complete.txt  # Only metabolic models
 
-5. Python Analysis Scripts
+5.
+Python Analysis Scripts
 These are way less modular and req more changing in the hardcode if needed (specificly look at the mappings)
 in general these filepaths have to be edited as well
 PATHWAY_FILE = "./results/gapseq_pathways/meta_pwy.tbl"  # From gapseq database
