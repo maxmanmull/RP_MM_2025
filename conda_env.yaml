@@ -1,4 +1,4 @@
-name: conda_metabolic_pipeline
+name: git rm -r --cached .idea
 channels:
   - conda-forge
   - bioconda
