@@ -1,0 +1,119 @@
+#PIPELINE CONFIGURATION
+
+# Directory Configuration
+directories:
+  singularity: "/lustre/BIF/nobackup/mulle088/singularity"
+  data: "/lustre/BIF/nobackup/mulle088/data_rp/90-1196727703/00_fastq"
+  results: "results"
+  media: "/lustre/BIF/nobackup/mulle088/snakemake/media"
+  input: "input"
+
+# Database Paths
+databases:
+  gtdbtk: "/lustre/BIF/nobackup/mulle088/gapseq_pipeline_final/gtdbtk_db/release226"
+  dbcan: "/lustre/BIF/nobackup/mulle088/databases/dbcan"
+  busco: "/lustre/BIF/nobackup/mulle088/databases/busco"
+  checkm: "/lustre/BIF/nobackup/mulle088/checkm_data"
+
+# Input Files
+input_files:
+  metadata: "input/meta_input_pipeline.csv"
+
+# Container Images
+containers:
+  trim_galore: "quay.io-biocontainers-trim-galore-0.6.10--hdfd78af_0.img"
+  spades: "quay.io-biocontainers-spades-3.15.5--h95f258a_0.img"
+  checkm: "checkm-genome_1.2.4--pyhdfd78af_2.sif"
+  bwa: "bwa_0.7.17--hed695b0_7.sif"
+  samtools: "samtools_1.16.1--h6899075_1.sif"
+  concoct: "concoct_1.1.0--py312h71dcd68_7.sif"
+  quast: "quay.io-biocontainers-quast-5.2.0--py39pl5321h2add14b_1.img"
+  gtdbtk: "quay.io-biocontainers-gtdbtk-2.4.1--pyhdfd78af_1.img"
+  gapseq: "quay.io-biocontainers-gapseq-1.4.0--h9ee0642_1.img"
+  antismash: "standalone_8.0.2.sif"
+  dbcan: "run_dbcan_latest.sif"
+  iqtree: "iqtree-3.0.1.img"
+  busco: "busco_v6.0.0_cv1.sif"
+
+# Processing Parameters
+parameters:
+  # Trimming parameters
+  trim_galore:
+    quality: 20
+    length: 50
+    threads: 4
+
+  # Assembly parameters
+  spades:
+    kmers: "21,33,55,77"
+    threads: 4
+    memory: 120
+
+  # CheckM parameters
+  checkm:
+    contamination_threshold: 5
+    completeness_threshold: 90
+    threads: 4
+
+  # Binning parameters
+  concoct:
+    chunk_size: 10000
+    overlap: 0
+    threads: 8
+
+  # Mapping parameters
+  mapping:
+    threads: 4
+
+  # QUAST parameters
+  quast:
+    min_contig: 500
+    threads: 4
+
+  # GTDB-Tk parameters
+  gtdbtk:
+    threads: 40
+    pplacer_cpus: 20
+
+  # IQ-TREE parameters
+  iqtree:
+    bootstrap: 1000
+    alrt: 1000
+    threads: 20
+
+  # Gapseq parameters
+  gapseq:
+    threads: 4
+
+  # antiSMASH parameters
+  antismash:
+    threads: 4
+
+  # dbCAN parameters
+  dbcan:
+    threads: 4
+
+  # BUSCO parameters
+  busco:
+    lineage: "bacteria_odb10"
+    threads: 4
+
+# Media columns in metadata
+media_types:
+  - Taurine
+  - Creatinine
+  - Carnitine
+  - Xylan
+  - Chitin
+
+# Quality thresholds for MAG classification
+quality_tiers:
+  high:
+    completeness_min: 90
+    contamination_max: 5
+  medium:
+    completeness_min: 70
+    contamination_max: 10
+  low:
+    completeness_min: 50
+    contamination_max: 10
